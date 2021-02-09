@@ -8,11 +8,10 @@ class Kafka(BaseImage):
 
     def check(self):
         from kafka import KafkaClient
-        from kafka.common import KafkaUnavailableError
         try:
-            KafkaClient(f"{self.host}:{self.get_port()}")
+            KafkaClient(bootstrap_servers=f"{self.host}:{self.get_port()}")
             return True
-        except KafkaUnavailableError:
+        except ValueError:
             pass
         return False
 
